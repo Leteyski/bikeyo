@@ -1,0 +1,307 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		443822701DA55C5E0094EC88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4438226F1DA55C5E0094EC88 /* AppDelegate.swift */; };
+		443822721DA55C5E0094EC88 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443822711DA55C5E0094EC88 /* ViewController.swift */; };
+		443822751DA55C5E0094EC88 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 443822731DA55C5E0094EC88 /* Main.storyboard */; };
+		443822771DA55C5E0094EC88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 443822761DA55C5E0094EC88 /* Assets.xcassets */; };
+		4438227A1DA55C5E0094EC88 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 443822781DA55C5E0094EC88 /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4438226C1DA55C5E0094EC88 /* Bikeyo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bikeyo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4438226F1DA55C5E0094EC88 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		443822711DA55C5E0094EC88 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		443822741DA55C5E0094EC88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		443822761DA55C5E0094EC88 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		443822791DA55C5E0094EC88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4438227B1DA55C5E0094EC88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		443822691DA55C5E0094EC88 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		443822631DA55C5E0094EC88 = {
+			isa = PBXGroup;
+			children = (
+				4438226E1DA55C5E0094EC88 /* Bikeyo */,
+				4438226D1DA55C5E0094EC88 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4438226D1DA55C5E0094EC88 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4438226C1DA55C5E0094EC88 /* Bikeyo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4438226E1DA55C5E0094EC88 /* Bikeyo */ = {
+			isa = PBXGroup;
+			children = (
+				4438226F1DA55C5E0094EC88 /* AppDelegate.swift */,
+				443822711DA55C5E0094EC88 /* ViewController.swift */,
+				443822731DA55C5E0094EC88 /* Main.storyboard */,
+				443822761DA55C5E0094EC88 /* Assets.xcassets */,
+				443822781DA55C5E0094EC88 /* LaunchScreen.storyboard */,
+				4438227B1DA55C5E0094EC88 /* Info.plist */,
+			);
+			path = Bikeyo;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4438226B1DA55C5E0094EC88 /* Bikeyo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4438227E1DA55C5E0094EC88 /* Build configuration list for PBXNativeTarget "Bikeyo" */;
+			buildPhases = (
+				443822681DA55C5E0094EC88 /* Sources */,
+				443822691DA55C5E0094EC88 /* Frameworks */,
+				4438226A1DA55C5E0094EC88 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Bikeyo;
+			productName = Bikeyo;
+			productReference = 4438226C1DA55C5E0094EC88 /* Bikeyo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		443822641DA55C5E0094EC88 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0800;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = Leteyski;
+				TargetAttributes = {
+					4438226B1DA55C5E0094EC88 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = JVGC9XXNDS;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 443822671DA55C5E0094EC88 /* Build configuration list for PBXProject "Bikeyo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 443822631DA55C5E0094EC88;
+			productRefGroup = 4438226D1DA55C5E0094EC88 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4438226B1DA55C5E0094EC88 /* Bikeyo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4438226A1DA55C5E0094EC88 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4438227A1DA55C5E0094EC88 /* LaunchScreen.storyboard in Resources */,
+				443822771DA55C5E0094EC88 /* Assets.xcassets in Resources */,
+				443822751DA55C5E0094EC88 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		443822681DA55C5E0094EC88 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				443822721DA55C5E0094EC88 /* ViewController.swift in Sources */,
+				443822701DA55C5E0094EC88 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		443822731DA55C5E0094EC88 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				443822741DA55C5E0094EC88 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		443822781DA55C5E0094EC88 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				443822791DA55C5E0094EC88 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4438227C1DA55C5E0094EC88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4438227D1DA55C5E0094EC88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4438227F1DA55C5E0094EC88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = JVGC9XXNDS;
+				INFOPLIST_FILE = Bikeyo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.leteyski.Bikeyo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		443822801DA55C5E0094EC88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = JVGC9XXNDS;
+				INFOPLIST_FILE = Bikeyo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.leteyski.Bikeyo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		443822671DA55C5E0094EC88 /* Build configuration list for PBXProject "Bikeyo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4438227C1DA55C5E0094EC88 /* Debug */,
+				4438227D1DA55C5E0094EC88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4438227E1DA55C5E0094EC88 /* Build configuration list for PBXNativeTarget "Bikeyo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4438227F1DA55C5E0094EC88 /* Debug */,
+				443822801DA55C5E0094EC88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 443822641DA55C5E0094EC88 /* Project object */;
+}
