@@ -9,6 +9,10 @@
 import UIKit
 import MapKit
 import CoreLocation
+import Alamofire
+
+//JCD api key a8fe986f0dc47defeccdb202251be114363e20c1
+// Stations request: https://api.jcdecaux.com/vls/v1/stations?contract=Paris&apiKey=a8fe986f0dc47defeccdb202251be114363e20c1
 
 class ViewController: UIViewController {
     @IBOutlet weak var Map: MKMapView!
@@ -18,19 +22,26 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         let location = CLLocationCoordinate2D(latitude: 48.870333, longitude: 2.346769)
-       // let annotation = MKPointAnnotation() */
-        
-        let span = MKCoordinateSpanMake(0.01, 0.01)
+        let span = MKCoordinateSpanMake(0.1, 0.1)
         let region = MKCoordinateRegion(center: location, span: span)
-        
-      /*  annotation.coordinate = location
-        annotation.title = "Tech Sentier"
-        annotation.subtitle = "Where tech happens" */
-        
+
         Map.setRegion(region, animated: true)
-      //  Map.addAnnotation(annotation)
         
-        setupStations(data: staticData)
+        Alamofire.request("https://api.jcdecaux.com/vls/v1/stations?contract=Paris&apiKey=a8fe986f0dc47defeccdb202251be114363e20c1").responseJSON { response in
+            print(response.request)  // original URL request
+            print(response.response) // HTTP URL response
+            print(response.data)     // server data
+            print(response.result)   // result of response serialization
+            
+            if let JSON = response.result.value as? [Dictionary<String,Any>] {
+                print("JSONBEGINS ---- \(JSON)")
+                self.setupStations(data: JSON)
+            } else {
+                print("Request failed somewhere")
+            }
+            
+        }
+        
 
     }
 
@@ -39,29 +50,47 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
     func setupStations(data: [Dictionary<String,Any>]) {
         
         for station in data {
-            if let latitude = station["latitude"] as? Double,
-            let longitude = station["longitude"] as? Double {
+            
+            guard let position = station["position"] as? [String:AnyObject] else {
+                    print("Invalid poosition")
+                    return
+            }
+            
+            if let latitude = position["lat"] as? Double,
+            let longitude = position["lng"] as? Double {
                 
                 let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                 let annotation = MKPointAnnotation()
                 
                 annotation.coordinate = location
-                annotation.title = "Unknown name"
-                annotation.subtitle = "Unknown adress"
+                
+                if let name = station["name"] as? String {
+                    annotation.title = name
+                } else {
+                    annotation.subtitle = "Unknown name"
+                }
+                
+                if let address = station["address"] as? String {
+                    annotation.subtitle = address
+                } else {
+                    annotation.subtitle = "Unknown address"
+                }
                 
                 self.Map.addAnnotation(annotation)
                 
-                
-                
-                print("Yey iy worked! latitude: \(latitude) longitude: \(longitude)")
-                
             } else {
-                print("Pfff... not working man")
-            }
                 
+                if let stationNumber = station["number"] as? Int {
+                    print("Station Nº\(stationNumber) returned invalid coordinates")
+                } else {
+                    print("Unknown station returned both Invalid coordinates && Invalid Station number")
+                }
+                }
             }
         }
         
