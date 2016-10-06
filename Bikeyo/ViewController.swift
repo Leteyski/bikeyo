@@ -22,10 +22,11 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         let location = CLLocationCoordinate2D(latitude: 48.870333, longitude: 2.346769)
-        let span = MKCoordinateSpanMake(0.1, 0.1)
+        let span = MKCoordinateSpanMake(0.01, 0.01)
         let region = MKCoordinateRegion(center: location, span: span)
 
         Map.setRegion(region, animated: true)
+        
         
         Alamofire.request("https://api.jcdecaux.com/vls/v1/stations?contract=Paris&apiKey=a8fe986f0dc47defeccdb202251be114363e20c1").responseJSON { response in
             print(response.request)  // original URL request
@@ -39,8 +40,8 @@ class ViewController: UIViewController {
             } else {
                 print("Request failed somewhere")
             }
-            //testing commit
         }
+        
         
 
     }
@@ -72,13 +73,14 @@ class ViewController: UIViewController {
                 if let name = station["name"] as? String {
                     annotation.title = name
                 } else {
-                    annotation.subtitle = "Unknown name"
+                    annotation.title = "Unknown name"
                 }
                 
-                if let address = station["address"] as? String {
-                    annotation.subtitle = address
+                if let availableBikes = station["available_bikes"] as? Int,
+                    let availableStands = station["available_bike_stands"] as? Int {
+                    annotation.subtitle = "Available Bikes: \(availableBikes) ; Available Stands: \(availableStands)"
                 } else {
-                    annotation.subtitle = "Unknown address"
+                    annotation.subtitle = "Unknown availability"
                 }
                 
                 self.Map.addAnnotation(annotation)
