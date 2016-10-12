@@ -22,6 +22,10 @@ class Station: Object {
     dynamic var bikeStands = 0
     dynamic var availableBikes = 0
     dynamic var availableBikeStands = 0
+    
+    override static func primaryKey() -> String {
+        return "number"
+    }
 }
 
 

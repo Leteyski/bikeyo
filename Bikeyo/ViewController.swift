@@ -21,11 +21,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     var location = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     let realm = try! Realm()
+    let requestURL = "https://api.jcdecaux.com/vls/v1/stations?contract=Paris&apiKey=a8fe986f0dc47defeccdb202251be114363e20c1"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
        // var location = CLLocationCoordinate2D(latitude: 48.870333, longitude: 2.346769)
+        
         
   
         if CLLocationManager.locationServicesEnabled() {
@@ -35,35 +37,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             locationManager.startUpdatingLocation()
         }
         
-        // Realm testing
-        
-        /*
-        
-        let station = Station()
-        station.number = 31705
-        station.name = "31705 - CHAMPEAUX (BAGNOLET)"
-        station.address = "RUE DES CHAMPEAUX (PRES DE LA GARE ROUTIERE) - 93170 BAGNOLET"
-        station.latitude = 48.8645278209514
-        station.longitude = 2.416170724425901
-        station.banking = true
-        station.bonus = true
-        station.statusIsOpen = true
-        station.contractName = "Paris"
-        station.bikeStands = 50
-        station.availableBikes = 0
-        station.availableBikeStands = 50
-        
-        try! realm.write {
-            realm.deleteAll()
-            realm.add(station)
-        } */
-        
         
         setupMap()
-        
-        
-       getStations(url: "https://api.jcdecaux.com/vls/v1/stations?contract=Paris&apiKey=a8fe986f0dc47defeccdb202251be114363e20c1")
-
+        loadStations()
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,7 +48,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     
-    func getStations(url: String) {
+    // Data Functions
+    
+    
+    func loadStations() {
+        
+        let savedStations = self.realm.objects(Station.self)
+        
+        if savedStations.count > 0 {
+            print("loadStations(): Updating Stations")
+            updateStations(APIRequestURL: self.requestURL)
+        } else {
+            print("loadStations(): Getting Stations")
+            getStations(APIRequestURL: self.requestURL)
+        }
+    }
+    
+    
+    func getStations(APIRequestURL url: String) {
         Alamofire.request(url).responseJSON { response in
             print(response.request)  // original URL request
             print(response.response) // HTTP URL response
@@ -85,10 +78,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 
                 
                 // Caching begins
-                
-                try! self.realm.write {
-                    self.realm.deleteAll()
-                }
                 
                 for JSONStation in JSON {
                     let station = Station()
@@ -146,30 +135,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                     
                 }
                 
-                
-                /*
-                let station = Station()
-                station.number = 31705
-                station.name = "31705 - CHAMPEAUX (BAGNOLET)"
-                station.address = "RUE DES CHAMPEAUX (PRES DE LA GARE ROUTIERE) - 93170 BAGNOLET"
-                station.latitude = 48.8645278209514
-                station.longitude = 2.416170724425901
-                station.banking = true
-                station.bonus = true
-                station.statusIsOpen = true
-                station.contractName = "Paris"
-                station.bikeStands = 50
-                station.availableBikes = 0
-                station.availableBikeStands = 50
-                
-                try! realm.write {
-                    realm.deleteAll()
-                    realm.add(station)
-                } */
-                
-                
-                
-                
                 self.setupStations()
         
             } else {
@@ -180,6 +145,47 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    func updateStations(APIRequestURL url: String) {
+        Alamofire.request(url).responseJSON { response in
+            print(response.request)  // original URL request
+            print(response.response) // HTTP URL response
+            print(response.data)     // server data
+            print(response.result)   // result of response serialization
+            
+            
+            if let JSON = response.result.value as? [Dictionary<String,Any>] {
+                print("JSONBEGINS ---- \(JSON)")
+                
+                
+                // Updating begins
+                
+                for JSONStation in JSON {
+                    
+                    if let number = JSONStation["number"] as? Int,
+                        let availableBikes = JSONStation["available_bikes"] as? Int,
+                        let availableBikeStands = JSONStation["available_bike_stands"] as? Int {
+                        
+                        try! self.realm.write {
+                            self.realm.create(Station.self, value: ["number": number, "availableBikes": availableBikes, "availableBikeStands": availableBikeStands], update: true)
+                        }
+                        
+                    } else {
+                        break
+                    }
+                    
+                }
+                
+                self.setupStations()
+                
+            } else {
+                print("Request failed somewhere")
+                self.showAlert(title: "Request failed!", message: "The app couldn't fetch current data, try later!")
+                self.setupStations()
+            }
+        }
+    }
+    
+    // View Functions
     
     func setupStations() {
         
