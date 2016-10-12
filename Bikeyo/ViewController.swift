@@ -40,6 +40,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         setupMap()
         loadStations()
+        
+        
+        // 262 Rue des pyrenees coords: lat = 48.88457006316311 lng = 2.360215572664323
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,6 +63,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             updateStations(APIRequestURL: self.requestURL)
         } else {
             print("loadStations(): Getting Stations")
+            setupStations()
             getStations(APIRequestURL: self.requestURL)
         }
     }
@@ -234,7 +238,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         alertControler.addAction(alertAction)
         present(alertControler, animated: true, completion: nil)
     }
-        
+    
 }
 
 
