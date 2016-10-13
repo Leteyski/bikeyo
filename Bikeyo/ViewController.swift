@@ -19,7 +19,7 @@ import RealmSwift
 class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var Map: MKMapView!
     let locationManager = CLLocationManager()
-    var location = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    var location = CLLocationCoordinate2D(latitude: 48.855324, longitude: 2.345074)
     let realm = try! Realm()
     let requestURL = "https://api.jcdecaux.com/vls/v1/stations?contract=Paris&apiKey=a8fe986f0dc47defeccdb202251be114363e20c1"
 
@@ -28,7 +28,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // Do any additional setup after loading the view, typically from a nib.
        // var location = CLLocationCoordinate2D(latitude: 48.870333, longitude: 2.346769)
         
-        
+        setupMap()
   
         if CLLocationManager.locationServicesEnabled() {
             locationManager.requestWhenInUseAuthorization()
@@ -38,7 +38,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
         
         
-        setupMap()
         loadStations()
         
         
@@ -63,7 +62,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             updateStations(APIRequestURL: self.requestURL)
         } else {
             print("loadStations(): Getting Stations")
-            setupStations()
             getStations(APIRequestURL: self.requestURL)
         }
     }
@@ -163,7 +161,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 
                 // Updating begins
                 
-                for JSONStation in JSON {
+                /* for JSONStation in JSON {
                     
                     if let number = JSONStation["number"] as? Int,
                         let availableBikes = JSONStation["available_bikes"] as? Int,
@@ -179,12 +177,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                     
                 }
                 
-                self.setupStations()
+                self.setupStations() */
+                
+                self.setupStations2(data: JSON)
+                
+                //Caching
+                
+                let jsonObject = JSONObject()
+                jsonObject.data = response.data! as NSData
+                
+                try! self.realm.write {
+                    self.realm.deleteAll()
+                    self.realm.add(jsonObject)
+                }
+                
                 
             } else {
                 print("Request failed somewhere")
                 self.showAlert(title: "Request failed!", message: "The app couldn't fetch current data, try later!")
-                self.setupStations()
+                let jsonObject = self.realm.objects(JSONObject.self)
+                for json in jsonObject {
+                    let finalData = try! JSONSerialization.jsonObject(with: json.data as Data, options: []) as? [Dictionary<String,Any>]
+                    self.setupStations2(data: finalData!)
+                }
+                
             }
         }
     }
@@ -208,6 +224,42 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         }
         }
+    
+    func setupStations2(data: [Dictionary<String,Any>]) {
+        
+        for station in data {
+            
+            if let position = station["position"] as? [String:AnyObject] {
+                if let latitude = position["lat"] as? Double,
+                    let longitude = position["lng"] as? Double {
+                    
+                    let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                    let annotation = MKPointAnnotation()
+                    
+                    annotation.coordinate = location
+                    
+                    if let name = station["name"] as? String {
+                        annotation.title = name
+                    } else {
+                        annotation.title = "Name unavailable"
+                    }
+                    
+                    if let availableBikes = station["available_bikes"] as? Int,
+                        let availableBikeStands = station["available_bike_stands"] as? Int {
+                        annotation.subtitle = "Available Bikes: \(availableBikes) ; Available Stands: \(availableBikeStands)"
+                    } else {
+                        annotation.subtitle = "Data unvailable"
+                    }
+                    
+                    self.Map.addAnnotation(annotation)
+                    
+                }
+            
+            }
+            
+        }
+        
+    }
     
     func setupMap() {
         

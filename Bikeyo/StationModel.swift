@@ -28,6 +28,10 @@ class Station: Object {
     }
 }
 
+class JSONObject: Object {
+    dynamic var data = NSData()
+}
+
 
 /*
  {
