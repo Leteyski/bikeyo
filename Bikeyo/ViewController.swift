@@ -17,7 +17,16 @@ import RealmSwift
 // Stations request: https://api.jcdecaux.com/vls/v1/stations?contract=Paris&apiKey=a8fe986f0dc47defeccdb202251be114363e20c1
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
+   
+    // Outlets
+    
     @IBOutlet weak var Map: MKMapView!
+    @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var RefreshButton: UIButton!
+    @IBOutlet weak var LocateButton: UIButton!
+    
+    // View Data
+    
     let locationManager = CLLocationManager()
     var location = CLLocationCoordinate2D(latitude: 48.855324, longitude: 2.345074)
     let realm = try! Realm()
@@ -26,22 +35,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-       // var location = CLLocationCoordinate2D(latitude: 48.870333, longitude: 2.346769)
         
         setupMap()
-  
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.requestWhenInUseAuthorization()
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
-        }
+        getLocation()
         
+        updateStations(APIRequestURL: requestURL)
         
-        loadStations()
-        
-        
-        // 262 Rue des pyrenees coords: lat = 48.88457006316311 lng = 2.360215572664323
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,102 +51,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     // Data Functions
     
-    
-    func loadStations() {
-        
-        let savedStations = self.realm.objects(Station.self)
-        
-        if savedStations.count > 0 {
-            print("loadStations(): Updating Stations")
-            updateStations(APIRequestURL: self.requestURL)
-        } else {
-            print("loadStations(): Getting Stations")
-            getStations(APIRequestURL: self.requestURL)
-        }
-    }
-    
-    
-    func getStations(APIRequestURL url: String) {
-        Alamofire.request(url).responseJSON { response in
-            print(response.request)  // original URL request
-            print(response.response) // HTTP URL response
-            print(response.data)     // server data
-            print(response.result)   // result of response serialization
-            
-            
-            if let JSON = response.result.value as? [Dictionary<String,Any>] {
-                print("JSONBEGINS ---- \(JSON)")
-                
-                
-                // Caching begins
-                
-                for JSONStation in JSON {
-                    let station = Station()
-                    
-                    if let number = JSONStation["number"] as? Int {
-                        station.number = number
-                    } else {
-                        station.number = 0
-                    }
-                    
-                    if let name = JSONStation["name"] as? String {
-                        station.name = name
-                    } else {
-                        station.name = ""
-                    }
-                    
-                    if let address = JSONStation["address"] as? String {
-                        station.address = address
-                    } else {
-                        station.address = ""
-                    }
-                    
-                    //TODO: FIX THIS BOMB
-                    
-                    let position = JSONStation["position"] as! [String: AnyObject]
-                    
-                    if let latitude = position["lat"] as? Double {
-                        station.latitude = latitude
-                    } else {
-                        station.latitude = 0.0
-                    }
-                    
-                    if let longitude = position["lng"] as? Double {
-                        station.longitude = longitude
-                    } else {
-                        station.longitude = 0.0
-                    }
-                    
-                    
-                    if let availableBikes = JSONStation["available_bikes"] as? Int {
-                        station.availableBikes = availableBikes
-                    } else {
-                        station.availableBikes = 0
-                    }
-                    
-                    if let availableBikeStands = JSONStation["available_bike_stands"] as? Int {
-                        station.availableBikeStands = availableBikeStands
-                    } else {
-                        station.availableBikeStands = 0
-                    }
-                    
-                    try! self.realm.write {
-                        self.realm.add(station)
-                    }
-                    
-                }
-                
-                self.setupStations()
-        
-            } else {
-                print("Request failed somewhere")
-                self.showAlert(title: "Request failed!", message: "The app couldn't fetch current data, try later!")
-                self.setupStations()
-            }
-        }
-    }
-    
     func updateStations(APIRequestURL url: String) {
+        
+        self.RefreshButton.isHidden = true
+        self.ActivityIndicator.isHidden = false
+        
         Alamofire.request(url).responseJSON { response in
             print(response.request)  // original URL request
             print(response.response) // HTTP URL response
@@ -156,30 +64,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
             
             if let JSON = response.result.value as? [Dictionary<String,Any>] {
-                print("JSONBEGINS ---- \(JSON)")
+               // print("JSONBEGINS ---- \(JSON)")
                 
-                
-                // Updating begins
-                
-                /* for JSONStation in JSON {
-                    
-                    if let number = JSONStation["number"] as? Int,
-                        let availableBikes = JSONStation["available_bikes"] as? Int,
-                        let availableBikeStands = JSONStation["available_bike_stands"] as? Int {
-                        
-                        try! self.realm.write {
-                            self.realm.create(Station.self, value: ["number": number, "availableBikes": availableBikes, "availableBikeStands": availableBikeStands], update: true)
-                        }
-                        
-                    } else {
-                        break
-                    }
-                    
-                }
-                
-                self.setupStations() */
-                
-                self.setupStations2(data: JSON)
+                self.setupStations(data: JSON)
                 
                 //Caching
                 
@@ -194,38 +81,28 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 
             } else {
                 print("Request failed somewhere")
-                self.showAlert(title: "Request failed!", message: "The app couldn't fetch current data, try later!")
+                self.showAlert(title: "Request failed!", message: "The app couldn't fetch current data, please try again later.")
                 let jsonObject = self.realm.objects(JSONObject.self)
-                for json in jsonObject {
-                    let finalData = try! JSONSerialization.jsonObject(with: json.data as Data, options: []) as? [Dictionary<String,Any>]
-                    self.setupStations2(data: finalData!)
-                }
                 
+                if jsonObject.count > 0 {
+                    for json in jsonObject {
+                    let finalData = try! JSONSerialization.jsonObject(with: json.data as Data, options: []) as? [Dictionary<String,Any>]
+                    self.setupStations(data: finalData!)
+                    }
+                } else {
+                    self.ActivityIndicator.isHidden = true
+                    self.RefreshButton.isHidden = false
+                }
             }
         }
     }
     
     // View Functions
     
-    func setupStations() {
-        
-        let data = self.realm.objects(Station.self)
-        
-        for station in data {
-            
-                let location = CLLocationCoordinate2D(latitude: station.latitude, longitude: station.longitude)
-                let annotation = MKPointAnnotation()
-                
-                annotation.coordinate = location
-                annotation.title = station.name
-                annotation.subtitle = "Available Bikes: \(station.availableBikes) ; Available Stands: \(station.availableBikeStands)"
-                
-                self.Map.addAnnotation(annotation)
-        
-        }
-        }
     
-    func setupStations2(data: [Dictionary<String,Any>]) {
+    func setupStations(data: [Dictionary<String,Any>]) {
+        
+        self.Map.removeAnnotations(self.Map.annotations)
         
         for station in data {
             
@@ -259,6 +136,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
         }
         
+        self.ActivityIndicator.isHidden = true
+        self.RefreshButton.isHidden = false
+        
+    }
+    
+    func getLocation() {
+       
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+
     }
     
     func setupMap() {
@@ -267,8 +158,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let region = MKCoordinateRegion(center: location, span: span)
         Map.setRegion(region, animated: true)
         Map.showsUserLocation = true
-        
-        
 
     }
     
@@ -290,6 +179,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         alertControler.addAction(alertAction)
         present(alertControler, animated: true, completion: nil)
     }
+    
+    
+    // IB Actions
+    
+    @IBAction func RefreshStations() {
+        updateStations(APIRequestURL: requestURL)
+    }
+    
+    @IBAction func RefreshLocation() {
+        getLocation()
+    }
+    
     
 }
 

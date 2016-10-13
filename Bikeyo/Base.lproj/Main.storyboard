@@ -27,37 +27,45 @@
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tf0-aS-Ls4">
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="locateBut" translatesAutoresizingMaskIntoConstraints="NO" id="SDo-4J-vN8">
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="7TO-Dw-kg4"/>
-                                                    <constraint firstAttribute="width" constant="30" id="gO5-Uo-lVL"/>
-                                                </constraints>
-                                            </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="butCircle" translatesAutoresizingMaskIntoConstraints="NO" id="JX3-Uo-Qj2">
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="32" id="Tzi-eU-oxA"/>
                                                     <constraint firstAttribute="height" constant="32" id="yCy-AC-vcm"/>
                                                 </constraints>
                                             </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x8w-sg-4Tf">
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="30" id="12t-fa-7cE"/>
+                                                    <constraint firstAttribute="height" constant="30" id="p4f-QD-jP2"/>
+                                                </constraints>
+                                                <state key="normal" image="locateBut"/>
+                                                <connections>
+                                                    <action selector="RefreshLocation" destination="BYZ-38-t0r" eventType="touchUpInside" id="fy3-Hy-FMl"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="JX3-Uo-Qj2" firstAttribute="centerX" secondItem="tf0-aS-Ls4" secondAttribute="centerX" id="AQL-JQ-DqF"/>
                                             <constraint firstAttribute="height" constant="32" id="Eh0-Ik-4er"/>
+                                            <constraint firstItem="x8w-sg-4Tf" firstAttribute="centerY" secondItem="tf0-aS-Ls4" secondAttribute="centerY" id="SJc-nH-Y2p"/>
                                             <constraint firstAttribute="width" constant="32" id="Sue-yP-5KV"/>
-                                            <constraint firstItem="SDo-4J-vN8" firstAttribute="centerX" secondItem="tf0-aS-Ls4" secondAttribute="centerX" id="UEb-xF-Bol"/>
+                                            <constraint firstItem="x8w-sg-4Tf" firstAttribute="centerX" secondItem="tf0-aS-Ls4" secondAttribute="centerX" id="bGA-Vo-b8N"/>
                                             <constraint firstItem="JX3-Uo-Qj2" firstAttribute="centerY" secondItem="tf0-aS-Ls4" secondAttribute="centerY" id="e0j-Ke-0Fy"/>
-                                            <constraint firstItem="SDo-4J-vN8" firstAttribute="centerY" secondItem="tf0-aS-Ls4" secondAttribute="centerY" id="ltc-hf-52D"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MJx-Zi-6Z4">
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="refreshBut" translatesAutoresizingMaskIntoConstraints="NO" id="m0h-tF-3SH">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="St0-qW-TSh">
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="30" id="3Sb-4R-lVf"/>
-                                                    <constraint firstAttribute="height" constant="30" id="e6N-Vg-4Zo"/>
+                                                    <constraint firstAttribute="height" constant="30" id="IzX-6s-Ivf"/>
+                                                    <constraint firstAttribute="width" constant="30" id="zJV-8z-6dF"/>
                                                 </constraints>
-                                            </imageView>
+                                                <state key="normal" image="refreshBut"/>
+                                                <connections>
+                                                    <action selector="RefreshStations" destination="BYZ-38-t0r" eventType="touchUpInside" id="MZd-Xm-3HP"/>
+                                                </connections>
+                                            </button>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="butCircle" translatesAutoresizingMaskIntoConstraints="NO" id="l5o-3k-6av">
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="32" id="Hs9-E7-7z8"/>
@@ -73,12 +81,12 @@
                                         </subviews>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstItem="m0h-tF-3SH" firstAttribute="centerY" secondItem="MJx-Zi-6Z4" secondAttribute="centerY" id="0qh-O5-EOs"/>
                                             <constraint firstItem="l5o-3k-6av" firstAttribute="centerX" secondItem="MJx-Zi-6Z4" secondAttribute="centerX" id="19q-kP-4Fc"/>
                                             <constraint firstAttribute="height" constant="32" id="3de-Eo-XtV"/>
                                             <constraint firstItem="aql-sR-Ple" firstAttribute="centerY" secondItem="MJx-Zi-6Z4" secondAttribute="centerY" id="9MS-rE-2Pz"/>
-                                            <constraint firstItem="m0h-tF-3SH" firstAttribute="centerX" secondItem="MJx-Zi-6Z4" secondAttribute="centerX" id="BfV-Bm-eT8"/>
                                             <constraint firstItem="aql-sR-Ple" firstAttribute="centerX" secondItem="MJx-Zi-6Z4" secondAttribute="centerX" id="IUM-50-N0h"/>
+                                            <constraint firstItem="St0-qW-TSh" firstAttribute="centerX" secondItem="MJx-Zi-6Z4" secondAttribute="centerX" id="J8Z-Gm-Rga"/>
+                                            <constraint firstItem="St0-qW-TSh" firstAttribute="centerY" secondItem="MJx-Zi-6Z4" secondAttribute="centerY" id="Kfa-xh-2mJ"/>
                                             <constraint firstAttribute="width" constant="32" id="iBA-b6-MVH"/>
                                             <constraint firstItem="l5o-3k-6av" firstAttribute="centerY" secondItem="MJx-Zi-6Z4" secondAttribute="centerY" id="ire-VZ-Vea"/>
                                         </constraints>
@@ -123,7 +131,10 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="ActivityIndicator" destination="aql-sR-Ple" id="Z1b-y4-1VD"/>
+                        <outlet property="LocateButton" destination="x8w-sg-4Tf" id="gr7-DB-Zva"/>
                         <outlet property="Map" destination="FLD-dO-DYD" id="ysP-eR-AOu"/>
+                        <outlet property="RefreshButton" destination="St0-qW-TSh" id="O6z-Oh-uMH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
