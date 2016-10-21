@@ -18,6 +18,7 @@
 		A23160B01DAC28C900541A4B /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A23160AD1DAC28C800541A4B /* RealmSwift.framework */; };
 		A23160B11DAC28C900541A4B /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A23160AD1DAC28C800541A4B /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A23160BA1DAC2A7D00541A4B /* StationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23160B91DAC2A7D00541A4B /* StationModel.swift */; };
+		A248BE741DB2B2170066BB81 /* StationPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A248BE731DB2B2170066BB81 /* StationPoint.swift */; };
 		A29213E01DA5A4E000335E1C /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29213DF1DA5A4E000335E1C /* SwiftyJSON.swift */; };
 		A29214181DA5ADAF00335E1C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A292140B1DA5ADA000335E1C /* Alamofire.framework */; };
 		A29214191DA5ADAF00335E1C /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A292140B1DA5ADA000335E1C /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -110,6 +111,7 @@
 		A23160AC1DAC28C800541A4B /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		A23160AD1DAC28C800541A4B /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		A23160B91DAC2A7D00541A4B /* StationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationModel.swift; sourceTree = "<group>"; };
+		A248BE731DB2B2170066BB81 /* StationPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationPoint.swift; sourceTree = "<group>"; };
 		A29213DF1DA5A4E000335E1C /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = swiftlyJSON/SwiftyJSON.swift; sourceTree = "<group>"; };
 		A29213FF1DA5ADA000335E1C /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -153,6 +155,7 @@
 				443822711DA55C5E0094EC88 /* ViewController.swift */,
 				443822731DA55C5E0094EC88 /* Main.storyboard */,
 				443822761DA55C5E0094EC88 /* Assets.xcassets */,
+				A248BE731DB2B2170066BB81 /* StationPoint.swift */,
 				443822781DA55C5E0094EC88 /* LaunchScreen.storyboard */,
 				443822811DA55DC10094EC88 /* StaticData.swift */,
 				4438227B1DA55C5E0094EC88 /* Info.plist */,
@@ -322,6 +325,7 @@
 				443822701DA55C5E0094EC88 /* AppDelegate.swift in Sources */,
 				A23160BA1DAC2A7D00541A4B /* StationModel.swift in Sources */,
 				443822821DA55DC10094EC88 /* StaticData.swift in Sources */,
+				A248BE741DB2B2170066BB81 /* StationPoint.swift in Sources */,
 				A29213E01DA5A4E000335E1C /* SwiftyJSON.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

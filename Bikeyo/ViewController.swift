@@ -16,7 +16,7 @@ import RealmSwift
 //JCD api key a8fe986f0dc47defeccdb202251be114363e20c1
 // Stations request: https://api.jcdecaux.com/vls/v1/stations?contract=Paris&apiKey=a8fe986f0dc47defeccdb202251be114363e20c1
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
    
     // Outlets
     
@@ -31,6 +31,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var location = CLLocationCoordinate2D(latitude: 48.855324, longitude: 2.345074)
     let realm = try! Realm()
     let requestURL = "https://api.jcdecaux.com/vls/v1/stations?contract=Paris&apiKey=a8fe986f0dc47defeccdb202251be114363e20c1"
+    
+    // Pins
+    
+  //  var pointAnnotation: StationPointAnnotation!
+    var pinAnnotationView: MKPinAnnotationView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +44,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         setupMap()
         getLocation()
         
+        
+
+
         updateStations(APIRequestURL: requestURL)
+        
         
     }
 
@@ -64,7 +73,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
             
             if let JSON = response.result.value as? [Dictionary<String,Any>] {
-               // print("JSONBEGINS ---- \(JSON)")
+                print("JSONBEGINS ---- \(JSON)")
                 
                 self.setupStations(data: JSON)
                 
@@ -104,7 +113,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         self.Map.removeAnnotations(self.Map.annotations)
         
-        for station in data {
+       /* for station in data {
             
             if let position = station["position"] as? [String:AnyObject] {
                 if let latitude = position["lat"] as? Double,
@@ -134,7 +143,34 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
             }
             
+        } */
+        
+        for station in data {
+            
+            if let position = station["position"] as? [String:AnyObject] {
+                if let latitude = position["lat"] as? Double,
+                    let longitude = position["lng"] as? Double {
+                    
+                    let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                    
+                    guard let name = station["name"] as? String else { return }
+                    guard let address = station["address"] as? String else { return }
+                    guard let availableBikes = station["available_bikes"] as? Int else { return }
+                    guard let availableStands = station["available_bike_stands"] as? Int else { return }
+                    guard let isBonus = station["bonus"] as? Bool else { return }
+                    
+                    let stationPoint = StationPoint(title: name, coordinate: location, subtitle: address, availableBikes: availableBikes, availableStands: availableStands, isBonus: isBonus)
+                    self.Map.addAnnotation(stationPoint)
+                    
+                }
+                
+            }
+            
         }
+        
+        
+        
+        
         
         self.ActivityIndicator.isHidden = true
         self.RefreshButton.isHidden = false
@@ -157,7 +193,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let span = MKCoordinateSpanMake(0.01, 0.01)
         let region = MKCoordinateRegion(center: location, span: span)
         Map.setRegion(region, animated: true)
-        Map.showsUserLocation = true
+      //  Map.showsUserLocation = true
+        Map.delegate = self
+        //Map.mapType = MKMapType.standard
 
     }
     
@@ -168,8 +206,55 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         self.location.longitude = locValue.longitude
         print("locations = \(locValue.latitude) \(locValue.longitude)")
         locationManager.stopUpdatingLocation()
+        
         setupMap()
     }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        //if mapView.reuseIdentifier
+        
+        if annotation is StationPoint {
+            let reuseIdentifier = "stationPin"
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
+            let stationPoint = annotation as! StationPoint
+            let numberLabel = UILabel()
+            
+            if annotationView == nil {
+                annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
+                annotationView?.canShowCallout = true
+            } else {
+                annotationView?.annotation = annotation
+            }
+            
+            //let stationPointAnnotation = annotation as! StationPointAnnotation
+            if stationPoint.isBonus == true {
+                annotationView?.image = UIImage(named: "yellowPinPlus")
+            } else {
+                annotationView?.image = UIImage(named: "yellowPin")
+            }
+            
+            numberLabel.text?.removeAll()
+            numberLabel.text = "\(stationPoint.availableBikes)"
+            
+            annotationView?.addSubview(numberLabel)
+            
+            numberLabel.textColor = UIColor.white
+            numberLabel.font = UIFont.boldSystemFont(ofSize: 13)
+            
+            
+            numberLabel.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                numberLabel.topAnchor.constraint(equalTo: (annotationView?.topAnchor)!, constant: 12),
+                numberLabel.centerXAnchor.constraint(equalTo: (annotationView?.centerXAnchor)!)
+                ])
+            
+            return annotationView
+        }
+        
+        return nil
+    }
+    
     
     
     func showAlert(title: String, message: String?) {
@@ -179,6 +264,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         alertControler.addAction(alertAction)
         present(alertControler, animated: true, completion: nil)
     }
+    
     
     
     // IB Actions
