@@ -13,13 +13,16 @@ import MapKit
 
 class StationPoint: NSObject, MKAnnotation {
     
-    var title: String?
-    var coordinate: CLLocationCoordinate2D
-    var subtitle: String?
+    let title: String?
+    let coordinate: CLLocationCoordinate2D
+    let subtitle: String?
     
-    var availableBikes: Int
-    var availableStands: Int
-    var isBonus: Bool
+    let availableBikes: Int
+    let availableStands: Int
+    let isBonus: Bool
+    
+    let pinLabel = UILabel()
+    var pinImage: UIImage?
     
     init(title: String, coordinate: CLLocationCoordinate2D, subtitle: String, availableBikes: Int, availableStands: Int, isBonus: Bool) {
         self.title = title
@@ -29,4 +32,52 @@ class StationPoint: NSObject, MKAnnotation {
         self.availableStands = availableStands
         self.isBonus = isBonus
     }
+    
+    func getPinLabel(segmentedControlSegmentIndex segmentIndex: Int) {
+        if segmentIndex == 0 {
+            pinLabel.text = "\(availableBikes)"
+        } else if segmentIndex == 1 {
+            pinLabel.text = "\(availableStands)"
+        }
+    }
+    
+    func getPinImage(segmentedControlSegmentIndex segmentIndex: Int) {
+        
+        
+        if segmentIndex == 0 {
+            
+            if availableBikes > 0 {
+                if isBonus == false {
+                    pinImage = UIImage(named: "yellowPin")
+                } else {
+                    pinImage = UIImage(named: "yellowPinPlus")
+                }
+            } else if availableBikes == 0 {
+                if isBonus == false {
+                    pinImage = UIImage(named: "greyPin")
+                } else {
+                    pinImage = UIImage(named: "greyPinPlus")
+                }
+            }
+            
+        } else if segmentIndex == 1 {
+            
+            if availableStands > 0 {
+                if isBonus == false {
+                    pinImage = UIImage(named: "purplePin")
+                } else {
+                    pinImage = UIImage(named: "purplePinPlus")
+                }
+            } else {
+                if isBonus == false {
+                    pinImage = UIImage(named: "greyPin")
+                } else {
+                    pinImage = UIImage(named: "greyPinPlus")
+                }
+            }
+            
+        }
+        
+    }
+    
 }

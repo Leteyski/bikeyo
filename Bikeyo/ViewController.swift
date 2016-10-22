@@ -16,6 +16,16 @@ import RealmSwift
 //JCD api key a8fe986f0dc47defeccdb202251be114363e20c1
 // Stations request: https://api.jcdecaux.com/vls/v1/stations?contract=Paris&apiKey=a8fe986f0dc47defeccdb202251be114363e20c1
 
+
+
+/*
+ var detailItem: AnyObject? {
+ didSet {
+ // Update the view.
+ self.configureView()
+ }
+ }*/
+
 class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
    
     // Outlets
@@ -24,6 +34,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var RefreshButton: UIButton!
     @IBOutlet weak var LocateButton: UIButton!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     // View Data
     
@@ -43,10 +54,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         
         setupMap()
         getLocation()
-        
-        
-
-
         updateStations(APIRequestURL: requestURL)
         
         
@@ -160,17 +167,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                     guard let isBonus = station["bonus"] as? Bool else { return }
                     
                     let stationPoint = StationPoint(title: name, coordinate: location, subtitle: address, availableBikes: availableBikes, availableStands: availableStands, isBonus: isBonus)
+                    //stationPoint.pinLabel.text = "\(stationPoint.availableBikes)"
+                    stationPoint.getPinLabel(segmentedControlSegmentIndex: self.segmentedControl.selectedSegmentIndex)
+                    stationPoint.getPinImage(segmentedControlSegmentIndex: self.segmentedControl.selectedSegmentIndex)
                     self.Map.addAnnotation(stationPoint)
-                    
+                
                 }
                 
             }
             
         }
-        
-        
-        
-        
         
         self.ActivityIndicator.isHidden = true
         self.RefreshButton.isHidden = false
@@ -210,7 +216,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         setupMap()
     }
     
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+  /* func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         //if mapView.reuseIdentifier
         
@@ -218,13 +224,28 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             let reuseIdentifier = "stationPin"
             var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
             let stationPoint = annotation as! StationPoint
-            let numberLabel = UILabel()
+            //let numberLabel = UILabel()
+            //numberLabel.text = String(stationPoint.availableBikes)
             
             if annotationView == nil {
                 annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
                 annotationView?.canShowCallout = true
+                
+                annotationView?.addSubview(stationPoint.numberLabel)
+                
+                stationPoint.numberLabel.textColor = UIColor.white
+                stationPoint.numberLabel.font = UIFont.boldSystemFont(ofSize: 13)
+                //numberLabel.text = "\(stationPoint.availableBikes)"
+                
+                stationPoint.numberLabel.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    stationPoint.numberLabel.topAnchor.constraint(equalTo: (annotationView?.topAnchor)!, constant: 12),
+                    stationPoint.numberLabel.centerXAnchor.constraint(equalTo: (annotationView?.centerXAnchor)!)
+                    ])
+
             } else {
                 annotationView?.annotation = annotation
+                //numberLabel.text = "\(stationPoint.availableBikes)"
             }
             
             //let stationPointAnnotation = annotation as! StationPointAnnotation
@@ -234,26 +255,50 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 annotationView?.image = UIImage(named: "yellowPin")
             }
             
-            numberLabel.text?.removeAll()
-            numberLabel.text = "\(stationPoint.availableBikes)"
+            return annotationView
+        }
+        
+        return nil
+    } */
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        //if mapView.reuseIdentifier
+        
+        if annotation is StationPoint {
             
-            annotationView?.addSubview(numberLabel)
+            let stationPoint = annotation as! StationPoint
             
-            numberLabel.textColor = UIColor.white
-            numberLabel.font = UIFont.boldSystemFont(ofSize: 13)
+            let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: nil)
+            annotationView.canShowCallout = true
             
+            annotationView.addSubview(stationPoint.pinLabel)
+                
+            stationPoint.pinLabel.textColor = UIColor.white
+            stationPoint.pinLabel.font = UIFont.boldSystemFont(ofSize: 13)
             
-            numberLabel.translatesAutoresizingMaskIntoConstraints = false
+            stationPoint.pinLabel.translatesAutoresizingMaskIntoConstraints = false
+            
             NSLayoutConstraint.activate([
-                numberLabel.topAnchor.constraint(equalTo: (annotationView?.topAnchor)!, constant: 12),
-                numberLabel.centerXAnchor.constraint(equalTo: (annotationView?.centerXAnchor)!)
-                ])
+                    stationPoint.pinLabel.topAnchor.constraint(equalTo: (annotationView.topAnchor), constant: 12),
+                    stationPoint.pinLabel.centerXAnchor.constraint(equalTo: (annotationView.centerXAnchor))
+                    ])
             
+            //let stationPointAnnotation = annotation as! StationPointAnnotation
+           /* if stationPoint.isBonus == true {
+                annotationView.image = UIImage(named: "yellowPinPlus")
+            } else {
+                annotationView.image = UIImage(named: "yellowPin")
+            } */
+            
+            annotationView.image = stationPoint.pinImage!
             return annotationView
         }
         
         return nil
     }
+    
+    
     
     
     
@@ -277,7 +322,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         getLocation()
     }
     
+    @IBAction func SegmentedControlIndexChanged(_ sender: AnyObject) {
+        
+        let jsonObject = self.realm.objects(JSONObject.self)
+        
+        for json in jsonObject {
+                let finalData = try! JSONSerialization.jsonObject(with: json.data as Data, options: []) as? [Dictionary<String,Any>]
+                self.setupStations(data: finalData!)
+        }
+        
+        print("Segmented Control reloads stations")
     
+    }
 }
 
 
