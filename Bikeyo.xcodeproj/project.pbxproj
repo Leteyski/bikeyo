@@ -16,11 +16,11 @@
 		A23160AF1DAC28C900541A4B /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A23160AC1DAC28C800541A4B /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A23160B01DAC28C900541A4B /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A23160AD1DAC28C800541A4B /* RealmSwift.framework */; };
 		A23160B11DAC28C900541A4B /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A23160AD1DAC28C800541A4B /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A23160BA1DAC2A7D00541A4B /* StationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23160B91DAC2A7D00541A4B /* StationModel.swift */; };
+		A23160BA1DAC2A7D00541A4B /* DataBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23160B91DAC2A7D00541A4B /* DataBaseModel.swift */; };
 		A248BE741DB2B2170066BB81 /* StationPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A248BE731DB2B2170066BB81 /* StationPoint.swift */; };
-		A29213E01DA5A4E000335E1C /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29213DF1DA5A4E000335E1C /* SwiftyJSON.swift */; };
 		A29214181DA5ADAF00335E1C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A292140B1DA5ADA000335E1C /* Alamofire.framework */; };
 		A29214191DA5ADAF00335E1C /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A292140B1DA5ADA000335E1C /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A2A5FA6B1DBC13F8001D7415 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2A5FA6A1DBC13F8001D7415 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,10 +108,10 @@
 		4438227B1DA55C5E0094EC88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A23160AC1DAC28C800541A4B /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		A23160AD1DAC28C800541A4B /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
-		A23160B91DAC2A7D00541A4B /* StationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationModel.swift; sourceTree = "<group>"; };
+		A23160B91DAC2A7D00541A4B /* DataBaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataBaseModel.swift; sourceTree = "<group>"; };
 		A248BE731DB2B2170066BB81 /* StationPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationPoint.swift; sourceTree = "<group>"; };
-		A29213DF1DA5A4E000335E1C /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = swiftlyJSON/SwiftyJSON.swift; sourceTree = "<group>"; };
 		A29213FF1DA5ADA000335E1C /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
+		A2A5FA6A1DBC13F8001D7415 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +121,7 @@
 			files = (
 				A23160AE1DAC28C900541A4B /* Realm.framework in Frameworks */,
 				A29214181DA5ADAF00335E1C /* Alamofire.framework in Frameworks */,
+				A2A5FA6B1DBC13F8001D7415 /* MapKit.framework in Frameworks */,
 				A23160B01DAC28C900541A4B /* RealmSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,6 +136,7 @@
 				A23160AD1DAC28C800541A4B /* RealmSwift.framework */,
 				4438226E1DA55C5E0094EC88 /* Bikeyo */,
 				4438226D1DA55C5E0094EC88 /* Products */,
+				A2A5FA691DBC13F8001D7415 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -151,13 +153,13 @@
 			children = (
 				4438226F1DA55C5E0094EC88 /* AppDelegate.swift */,
 				443822711DA55C5E0094EC88 /* ViewController.swift */,
-				443822731DA55C5E0094EC88 /* Main.storyboard */,
-				443822761DA55C5E0094EC88 /* Assets.xcassets */,
 				A248BE731DB2B2170066BB81 /* StationPoint.swift */,
+				A23160B91DAC2A7D00541A4B /* DataBaseModel.swift */,
+				443822731DA55C5E0094EC88 /* Main.storyboard */,
 				443822781DA55C5E0094EC88 /* LaunchScreen.storyboard */,
+				443822761DA55C5E0094EC88 /* Assets.xcassets */,
 				4438227B1DA55C5E0094EC88 /* Info.plist */,
 				A292141D1DA5AE8300335E1C /* Libraries */,
-				A23160B91DAC2A7D00541A4B /* StationModel.swift */,
 			);
 			path = Bikeyo;
 			sourceTree = "<group>";
@@ -179,10 +181,17 @@
 		A292141D1DA5AE8300335E1C /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				A29213DF1DA5A4E000335E1C /* SwiftyJSON.swift */,
 				A29213FF1DA5ADA000335E1C /* Alamofire.xcodeproj */,
 			);
 			name = Libraries;
+			sourceTree = "<group>";
+		};
+		A2A5FA691DBC13F8001D7415 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A2A5FA6A1DBC13F8001D7415 /* MapKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,6 +230,11 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = JVGC9XXNDS;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -320,9 +334,8 @@
 			files = (
 				443822721DA55C5E0094EC88 /* ViewController.swift in Sources */,
 				443822701DA55C5E0094EC88 /* AppDelegate.swift in Sources */,
-				A23160BA1DAC2A7D00541A4B /* StationModel.swift in Sources */,
+				A23160BA1DAC2A7D00541A4B /* DataBaseModel.swift in Sources */,
 				A248BE741DB2B2170066BB81 /* StationPoint.swift in Sources */,
-				A29213E01DA5A4E000335E1C /* SwiftyJSON.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
